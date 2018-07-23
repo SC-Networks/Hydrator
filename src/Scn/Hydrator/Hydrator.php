@@ -40,20 +40,4 @@ final class Hydrator implements HydratorInterface
 
         return $data;
     }
-
-    public function postExtract(ExtractorConfigInterface $config, object $entity): void
-    {
-        if ($postExtractor = $config->getPostExtractCallback()) {
-            $postExtractor = $postExtractor->bindTo($entity, $entity);
-            $postExtractor();
-        }
-    }
-
-    public function postHydrate(HydratorConfigInterface $config, object $entity): void
-    {
-        if ($postHydrator = $config->getPostHydrateCallback()) {
-            $postHydrator = $postHydrator->bindTo($entity, $entity);
-            $postHydrator();
-        }
-    }
 }
