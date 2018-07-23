@@ -22,7 +22,7 @@ class CarHydrationConfig implements HydratorConfigInterface
             'number_of_wheels' => function (int $value): void {
                 $this->numberOfWheels = $value;
             },
-            'in_stock' => function (bool $value): void {
+            'out_of_stock' => function (bool $value): void {
                 $this->available = !$value;
             }
         ];
@@ -33,7 +33,7 @@ $data = [
     'name' => 'Gaudi',
     'color' => 'pink',
     'number_of_wheels' => 5,
-    'in_stock' => false,
+    'out_of_stock' => false,
 ];
 
 $car = new Car(null, null, null, null); // create entity class

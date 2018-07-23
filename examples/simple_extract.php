@@ -25,7 +25,7 @@ $mapping = [
     'number_of_wheels' => function (): int {
         return $this->numberOfWheels;
     },
-    'in_stock' => function (): bool {
+    'out_of_stock' => function (): bool {
         return !$this->available;
     }
 ];
@@ -46,7 +46,7 @@ array(4) {
     string(4) "pink"
     ["number_of_wheels"]=>
     int(5)
-    ["in_stock"]=>
+    ["out_of_stock"]=>
     bool(false)
 }
  */
