@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Scn\Hydrator\Configuration;
 
 final class GenericExtractorConfig implements ExtractorConfigInterface
@@ -17,7 +15,10 @@ final class GenericExtractorConfig implements ExtractorConfigInterface
         $this->properties = $propertyMapping;
     }
 
-    public function getExtractorProperties(): array
+    /**
+     * @return array
+     */
+    public function getExtractorProperties()
     {
         return $this->properties;
     }

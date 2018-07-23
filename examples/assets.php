@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 require_once __DIR__.'/../vendor/autoload.php';
 
 final class Car
@@ -27,11 +25,19 @@ final class Car
      */
     private $available;
 
+    /**
+     * Car constructor.
+     *
+     * @param null|string $name
+     * @param null|string $color
+     * @param int|null $numberOfWheels
+     * @param bool|null $available
+     */
     public function __construct(
-        ?string $name,
-        ?string $color,
-        ?int $numberOfWheels,
-        ?bool $available
+        $name,
+        $color,
+        $numberOfWheels,
+        $available
     ) {
         $this->name = $name;
         $this->color = $color;

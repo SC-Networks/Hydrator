@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Scn\Hydrator\Configuration\ExtractorConfigInterface;
 use Scn\Hydrator\Hydrator;
 
@@ -10,19 +8,22 @@ require_once __DIR__.'/assets.php';
 class CarExtractionConfig implements ExtractorConfigInterface
 {
 
-    public function getExtractorProperties(): array
+    /**
+     * @return array
+     */
+    public function getExtractorProperties()
     {
         return [
-            'name' => function (): string {
+            'name' => function () {
                 return $this->name;
             },
-            'color' => function (): string {
+            'color' => function () {
                 return $this->color;
             },
-            'number_of_wheels' => function (): int {
+            'number_of_wheels' => function () {
                 return $this->numberOfWheels;
             },
-            'out_of_stock' => function (): bool {
+            'out_of_stock' => function () {
                 return !$this->available;
             }
         ];

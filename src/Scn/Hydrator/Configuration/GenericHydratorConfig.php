@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Scn\Hydrator\Configuration;
 
 final class GenericHydratorConfig implements HydratorConfigInterface
@@ -17,7 +15,10 @@ final class GenericHydratorConfig implements HydratorConfigInterface
         $this->properties = $propertyMapping;
     }
 
-    public function getHydratorProperties(): array
+    /**
+     * @return array
+     */
+    public function getHydratorProperties()
     {
         return $this->properties;
     }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Scn\Hydrator\Configuration\ExtractorConfigInterface;
 use Scn\Hydrator\Configuration\HydratorConfigInterface;
 use Scn\Hydrator\Hydrator;
@@ -35,10 +33,10 @@ class JsonRpcRequest
 class JsonRpcRequestHydratorConfig implements HydratorConfigInterface, ExtractorConfigInterface
 {
 
-    public function getHydratorProperties(): array
+    public function getHydratorProperties()
     {
         return [
-            'id' => function ($value): void {
+            'id' => function ($value) {
                 if (!is_string($value) && !is_int($value) && !is_null($value)) {
                     throw new InvalidArgumentException('Invalid request id');
                 }
@@ -46,19 +44,19 @@ class JsonRpcRequestHydratorConfig implements HydratorConfigInterface, Extractor
                 $this->id = $value;
                 $this->isNotification = $this->id === null;
             },
-            'jsonrpc' => function (string $value): void {
+            'jsonrpc' => function ($value) {
                 if ($value !== '2.0') {
                     throw new InvalidArgumentException('Invalid json-rpc version string');
                 }
             },
-            'method' => function (string $value): void {
+            'method' => function ($value) {
                 if ($value === '') {
                     throw new InvalidArgumentException('Invalid method');
                 }
 
                 $this->method = $value;
             },
-            'params' => function ($value): void {
+            'params' => function ($value) {
                 if (!is_array($value) && !is_object($value) && !is_null($value)) {
                     throw new InvalidArgumentException('Invalid params');
                 }
@@ -68,16 +66,16 @@ class JsonRpcRequestHydratorConfig implements HydratorConfigInterface, Extractor
         ];
     }
 
-    public function getExtractorProperties(): array
+    public function getExtractorProperties()
     {
         return [
             'id' => function () {
                 return $this->id;
             },
-            'jsonrpc' => function (): string {
+            'jsonrpc' => function () {
                 return '2.0';
             },
-            'method' => function (): string {
+            'method' => function () {
                 return $this->method;
             },
             'params' => function () {
