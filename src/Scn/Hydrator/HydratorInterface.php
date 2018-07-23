@@ -12,9 +12,5 @@ interface HydratorInterface
 
     public function hydrate(HydratorConfigInterface $config, object $entity, array $data): void;
 
-    public function postHydrate(HydratorConfigInterface $config, object $entity): void;
-
     public function extract(ExtractorConfigInterface $config, object $entity): array;
-
-    public function postExtract(ExtractorConfigInterface $config, object $entity): void;
 }
