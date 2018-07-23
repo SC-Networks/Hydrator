@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Scn\Hydrator\Configuration\HydratorConfigInterface;
 use Scn\Hydrator\Hydrator;
 
@@ -10,19 +8,19 @@ require_once __DIR__.'/assets.php';
 class CarHydrationConfig implements HydratorConfigInterface
 {
 
-    public function getHydratorProperties(): array
+    public function getHydratorProperties()
     {
         return [
-            'name' => function (string $value): void {
+            'name' => function ($value) {
                 $this->name = $value;
             },
-            'color' => function (string $value): void {
+            'color' => function ($value) {
                 $this->color = $value;
             },
-            'number_of_wheels' => function (int $value): void {
+            'number_of_wheels' => function ($value) {
                 $this->numberOfWheels = $value;
             },
-            'out_of_stock' => function (bool $value): void {
+            'out_of_stock' => function ($value) {
                 $this->available = !$value;
             }
         ];

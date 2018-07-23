@@ -1,10 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Scn\Hydrator\Configuration;
 
 interface HydratorConfigInterface
 {
-    public function getHydratorProperties(): array;
+
+    /**
+     * @return array
+     */
+    public function getHydratorProperties();
 }

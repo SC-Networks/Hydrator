@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Scn\Hydrator\Configuration\GenericExtractorConfig;
 use Scn\Hydrator\Hydrator;
 
@@ -16,16 +14,16 @@ $car = new Car(
 
 
 $mapping = [
-    'name' => function (): string {
+    'name' => function () {
         return $this->name;
     },
-    'color' => function (): string {
+    'color' => function () {
         return $this->color;
     },
-    'number_of_wheels' => function (): int {
+    'number_of_wheels' => function () {
         return $this->numberOfWheels;
     },
-    'out_of_stock' => function (): bool {
+    'out_of_stock' => function () {
         return !$this->available;
     }
 ];

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Test\Scn\Hydrator;
 
 use PHPUnit\Framework\TestCase;
@@ -22,18 +20,18 @@ final class HydratorTest extends TestCase
      */
     private $testValueStorage = [];
 
-    public function setUp(): void
+    public function setUp()
     {
         $this->subject = new Hydrator();
         $this->testValueStorage = [];
     }
 
-    public function testHydrate(): void
+    public function testHydrate()
     {
         $testPropertySetter = function (
             $value,
-            string $name
-        ): void {
+            $name
+        ) {
             $this->testValueStorage[$name] = $value;
         };
 
@@ -44,7 +42,7 @@ final class HydratorTest extends TestCase
         ]);
 
 
-        $randomInt = random_int(0, PHP_INT_MAX);
+        $randomInt = mt_rand(0, PHP_INT_MAX);
         $testData = [
             'prop1' => 'fu',
             'prop2' => $randomInt,
@@ -56,10 +54,10 @@ final class HydratorTest extends TestCase
         $this->assertSame($testData, $this->testValueStorage);
     }
 
-    public function testExtract(): void
+    public function testExtract()
     {
         $testPropertyGetter = function (
-            string $name
+            $name
         ) {
             return $this->testValueStorage[$name];
         };
@@ -71,14 +69,7 @@ final class HydratorTest extends TestCase
         ]);
 
 
-        $randomInt = random_int(0, PHP_INT_MAX);
-
-
-        $testData = [
-            'prop1' => 'fu',
-            'prop2' => $randomInt,
-            'prop3' => null,
-        ];
+        $randomInt = mt_rand(0, PHP_INT_MAX);
 
         $this->testValueStorage = [
             'prop1' => ['fu', $this],

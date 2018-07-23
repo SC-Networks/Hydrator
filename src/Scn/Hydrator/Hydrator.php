@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Scn\Hydrator;
 
 use Scn\Hydrator\Configuration\ExtractorConfigInterface;
@@ -10,18 +8,31 @@ use Scn\Hydrator\Configuration\HydratorConfigInterface;
 final class Hydrator implements HydratorInterface
 {
 
-    public function hydrate(HydratorConfigInterface $config, object $entity, array $data): void
+    /**
+     * @param HydratorConfigInterface $config
+     * @param object $entity
+     * @param array $data
+     *
+     * @return void
+     */
+    public function hydrate(HydratorConfigInterface $config, $entity, array $data)
     {
         foreach ($config->getHydratorProperties() as $propertyName => $set) {
             if ($set instanceof \Closure) {
                 $set = $set->bindTo($entity, $entity);
             }
 
-            $set($data[$propertyName] ?? null, $propertyName);
+            $set(isset($data[$propertyName]) ? $data[$propertyName] : null, $propertyName);
         }
     }
 
-    public function extract(ExtractorConfigInterface $config, object $entity): array
+    /**
+     * @param ExtractorConfigInterface $config
+     * @param object $entity
+     *
+     * @return array
+     */
+    public function extract(ExtractorConfigInterface $config, $entity)
     {
         $data = [];
 
