@@ -11,6 +11,7 @@ final class Hydrator implements HydratorInterface
 {
 
     public const NO_STRICT_KEYS = 1;
+    public const IGNORE_KEYS = 2;
 
     private function invoke(callable $callback, object $entity, ...$args)
     {
@@ -21,6 +22,22 @@ final class Hydrator implements HydratorInterface
         return $callback(...$args);
     }
 
+    private function flagIsSet(int $flags, int $mask): bool
+    {
+        return ($flags & $mask) === $mask;
+    }
+
+    private function arrayCombine(array $keys, array $data): array
+    {
+        $result = [];
+
+        foreach (array_values($data) as $index => $value) {
+            $result[$keys[$index] ?? (string) $index] = $value;
+        }
+
+        return $result;
+    }
+
     public function hydrate(
         HydratorConfigInterface $config,
         object $entity,
@@ -29,7 +46,11 @@ final class Hydrator implements HydratorInterface
     ): void {
         $hydratorProperties = $config->getHydratorProperties();
 
-        if (~$flags & static::NO_STRICT_KEYS) {
+        if ($this->flagIsSet($flags, static::IGNORE_KEYS)) {
+            $data = $this->arrayCombine(array_keys($hydratorProperties), $data);
+        }
+
+        if (!$this->flagIsSet($flags, static::NO_STRICT_KEYS)) {
             $diff = array_keys(array_diff_key($data, $hydratorProperties));
 
             if ($diff !== []) {
@@ -37,7 +58,7 @@ final class Hydrator implements HydratorInterface
             }
         }
 
-        foreach ($config->getHydratorProperties() as $propertyName => $set) {
+        foreach ($hydratorProperties as $propertyName => $set) {
             $this->invoke($set, $entity, $data[$propertyName] ?? null, $propertyName);
         }
     }
