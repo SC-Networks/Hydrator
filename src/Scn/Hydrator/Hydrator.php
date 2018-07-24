@@ -10,6 +10,8 @@ use Scn\Hydrator\Configuration\HydratorConfigInterface;
 final class Hydrator implements HydratorInterface
 {
 
+    public const NO_STRICT_KEYS = 1;
+
     private function invoke(callable $callback, object $entity, ...$args)
     {
         if ($callback instanceof \Closure) {
@@ -19,8 +21,22 @@ final class Hydrator implements HydratorInterface
         return $callback(...$args);
     }
 
-    public function hydrate(HydratorConfigInterface $config, object $entity, array $data): void
-    {
+    public function hydrate(
+        HydratorConfigInterface $config,
+        object $entity,
+        array $data,
+        int $flags = 0
+    ): void {
+        $hydratorProperties = $config->getHydratorProperties();
+
+        if (~$flags & static::NO_STRICT_KEYS) {
+            $diff = array_keys(array_diff_key($data, $hydratorProperties));
+
+            if ($diff !== []) {
+                throw new \InvalidArgumentException(sprintf('Unexpected data: %s', join(', ', $diff)));
+            }
+        }
+
         foreach ($config->getHydratorProperties() as $propertyName => $set) {
             $this->invoke($set, $entity, $data[$propertyName] ?? null, $propertyName);
         }

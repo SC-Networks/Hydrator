@@ -56,6 +56,58 @@ final class HydratorTest extends TestCase
         $this->assertSame($testData, $this->testValueStorage);
     }
 
+    public function testHydrateIsStrictByDefault()
+    {
+
+        $testPropertySetter = function (
+            $value,
+            string $name
+        ): void {
+            $this->testValueStorage[$name] = $value;
+        };
+
+        $hydratorConfig = new GenericHydratorConfig([
+            'prop1' => $testPropertySetter,
+        ]);
+
+
+        $testData = [
+            'unexpected' => true,
+            'prop1' => 'fu',
+            'another_unexpected' => true,
+        ];
+
+        $expectedResult = [
+            'prop1' => 'fu',
+        ];
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unexpected data: unexpected, another_unexpected');
+
+        $this->subject->hydrate($hydratorConfig, $this, $testData, 0);
+
+        $this->assertSame($expectedResult, $this->testValueStorage);
+    }
+
+    public function testHydrateOnNonStrict()
+    {
+        $hydratorConfig = new GenericHydratorConfig([
+            'prop1' => 'strval',
+        ]);
+
+
+        $testData = [
+            'unexpected' => true,
+            'prop1' => 'fu',
+            'another_unexpected' => true,
+        ];
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unexpected data: unexpected, another_unexpected');
+
+        $this->subject->hydrate($hydratorConfig, $this, $testData, 0);
+    }
+
     public function testExtract(): void
     {
         $testPropertyGetter = function (
@@ -72,13 +124,6 @@ final class HydratorTest extends TestCase
 
 
         $randomInt = random_int(0, PHP_INT_MAX);
-
-
-        $testData = [
-            'prop1' => 'fu',
-            'prop2' => $randomInt,
-            'prop3' => null,
-        ];
 
         $this->testValueStorage = [
             'prop1' => ['fu', $this],
