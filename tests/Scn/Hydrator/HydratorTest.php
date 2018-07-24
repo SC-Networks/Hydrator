@@ -56,6 +56,25 @@ final class HydratorTest extends TestCase
         $this->assertSame($testData, $this->testValueStorage);
     }
 
+    public function testHydrateStrict()
+    {
+        $hydratorConfig = new GenericHydratorConfig([
+            'prop1' => '',
+        ]);
+
+
+        $testData = [
+            'unexpected' => true,
+            'prop1' => 'fu',
+            'another_unexpected' => true,
+        ];
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unexpected data: unexpected, another_unexpected');
+
+        $this->subject->hydrate($hydratorConfig, $this, $testData, Hydrator::STRICT_KEYS);
+    }
+
     public function testExtract(): void
     {
         $testPropertyGetter = function (
