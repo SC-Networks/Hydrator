@@ -8,9 +8,7 @@ php:
 
 matrix:
   allow_failures:
-    - php:
-      - "7.4snapshot"
-      - "nightly"
+    - php: "nightly"
 
 script:
   - composer tests
