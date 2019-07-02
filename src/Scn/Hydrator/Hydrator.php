@@ -10,8 +10,8 @@ use Scn\Hydrator\Configuration\HydratorConfigInterface;
 final class Hydrator implements HydratorInterface
 {
 
-    public const NO_STRICT_KEYS = 1;
-    public const IGNORE_KEYS = 2;
+    public const NO_STRICT_KEYS = 0b00000001;
+    public const IGNORE_KEYS =    0b00000010;
 
     private function invoke(callable $callback, object $entity, ...$args)
     {

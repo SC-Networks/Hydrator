@@ -68,6 +68,12 @@ final class HydratorTest extends TestCase
         $this->assertSame($expectedData, $this->testValueStorage);
     }
 
+    public function testHydratorOptions(): void
+    {
+        $this->assertSame(1, Hydrator::NO_STRICT_KEYS);
+        $this->assertSame(2, Hydrator::IGNORE_KEYS);
+    }
+
     public function testHydrate(): void
     {
         $hydratorConfig = $this->createHydratorConfig('prop1', 'prop2', 'prop3');
