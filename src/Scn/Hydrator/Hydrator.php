@@ -12,6 +12,7 @@ final class Hydrator implements HydratorInterface
 
     public const NO_STRICT_KEYS = 0b00000001;
     public const IGNORE_KEYS =    0b00000010;
+    public const DEFAULT =        0b00000000;
 
     private function invoke(callable $callback, object $entity, ...$args)
     {
@@ -19,12 +20,7 @@ final class Hydrator implements HydratorInterface
             $callback = $callback->bindTo($entity, $entity);
         }
 
-        return $callback(...$args);
-    }
-
-    private function flagIsSet(int $flags, int $mask): bool
-    {
-        return ($flags & $mask) === $mask;
+        return call_user_func_array($callback, $args);
     }
 
     private function arrayCombine(array $keys, array $data): array
@@ -42,15 +38,15 @@ final class Hydrator implements HydratorInterface
         HydratorConfigInterface $config,
         object $entity,
         array $data,
-        int $flags = 0
+        int $flags = self::DEFAULT
     ): void {
         $hydratorProperties = $config->getHydratorProperties();
 
-        if ($this->flagIsSet($flags, static::IGNORE_KEYS)) {
+        if ($flags & static::IGNORE_KEYS) {
             $data = $this->arrayCombine(array_keys($hydratorProperties), $data);
         }
 
-        if (!$this->flagIsSet($flags, static::NO_STRICT_KEYS)) {
+        if (~$flags & static::NO_STRICT_KEYS) {
             $diff = array_keys(array_diff_key($data, $hydratorProperties));
 
             if ($diff !== []) {
