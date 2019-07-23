@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scn\Hydrator;
 
+use InvalidArgumentException;
 use Scn\Hydrator\Configuration\ExtractorConfigInterface;
 use Scn\Hydrator\Configuration\HydratorConfigInterface;
 
@@ -50,7 +51,7 @@ final class Hydrator implements HydratorInterface
             $diff = array_keys(array_diff_key($data, $hydratorProperties));
 
             if ($diff !== []) {
-                throw new \InvalidArgumentException(sprintf('Unexpected data: %s', join(', ', $diff)));
+                throw new InvalidArgumentException(sprintf('Unexpected data: %s', join(', ', $diff)));
             }
         }
 
