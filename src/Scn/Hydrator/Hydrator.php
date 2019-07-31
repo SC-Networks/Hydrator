@@ -24,17 +24,6 @@ final class Hydrator implements HydratorInterface
         return call_user_func_array($callback, $args);
     }
 
-    private function arrayCombine(array $keys, array $data): array
-    {
-        $result = [];
-
-        foreach (array_values($data) as $index => $value) {
-            $result[$keys[$index] ?? (string) $index] = $value;
-        }
-
-        return $result;
-    }
-
     public function hydrate(
         HydratorConfigInterface $config,
         object $entity,
@@ -44,7 +33,7 @@ final class Hydrator implements HydratorInterface
         $hydratorProperties = $config->getHydratorProperties();
 
         if ($flags & static::IGNORE_KEYS) {
-            $data = $this->arrayCombine(array_keys($hydratorProperties), $data);
+            $data = array_combine(array_keys($hydratorProperties),$data);
         }
 
         if (~$flags & static::NO_STRICT_KEYS) {

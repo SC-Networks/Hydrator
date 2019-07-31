@@ -70,6 +70,7 @@ final class HydratorTest extends TestCase
 
     public function testHydratorOptions(): void
     {
+        $this->assertSame(0, Hydrator::DEFAULT);
         $this->assertSame(1, Hydrator::NO_STRICT_KEYS);
         $this->assertSame(2, Hydrator::IGNORE_KEYS);
     }
