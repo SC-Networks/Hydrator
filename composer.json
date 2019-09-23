@@ -9,6 +9,9 @@
             "email": "wuehr@sc-networks.com"
         }
     ],
+    "suggest": {
+        "scn/hydrator-property-values": "Provides a set of easy-to-use property callbacks"
+    },
     "require": {
         "php": "^7.2|^7.3|^7.4"
     },
