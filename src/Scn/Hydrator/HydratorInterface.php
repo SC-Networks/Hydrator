@@ -9,7 +9,6 @@ use Scn\Hydrator\Configuration\HydratorConfigInterface;
 
 interface HydratorInterface
 {
-
     public function hydrate(HydratorConfigInterface $config, object $entity, array $data, int $flags = 0): void;
 
     public function extract(ExtractorConfigInterface $config, object $entity): array;

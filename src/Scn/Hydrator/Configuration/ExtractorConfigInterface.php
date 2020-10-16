@@ -6,5 +6,8 @@ namespace Scn\Hydrator\Configuration;
 
 interface ExtractorConfigInterface
 {
+    /**
+     * @return array<array-key, callable>
+     */
     public function getExtractorProperties(): array;
 }

@@ -8,15 +8,21 @@ final class GenericHydratorConfig implements HydratorConfigInterface
 {
 
     /**
-     * @var array
+     * @var array<array-key, callable>
      */
-    private $properties;
+    private array $properties;
 
+    /**
+     * @param array<array-key, callable> $propertyMapping
+     */
     public function __construct(array $propertyMapping)
     {
         $this->properties = $propertyMapping;
     }
 
+    /**
+     * @return array<array-key, callable>
+     */
     public function getHydratorProperties(): array
     {
         return $this->properties;
