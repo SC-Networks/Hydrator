@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Test\Scn\Hydrator;
 
+use Closure;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Scn\Hydrator\Configuration\ExtractorConfigInterface;
 use Scn\Hydrator\Configuration\GenericExtractorConfig;
@@ -14,25 +16,13 @@ use Scn\Hydrator\Hydrator;
 final class HydratorTest extends TestCase
 {
 
-    /**
-     * @var Hydrator
-     */
-    private $subject;
+    private Hydrator $subject;
 
-    /**
-     * @var array
-     */
-    private $testValueStorage = [];
+    private array $testValueStorage = [];
 
-    /**
-     * @var \Closure
-     */
-    private $testPropertySetter;
+    private Closure $testPropertySetter;
 
-    /**
-     * @var \Closure
-     */
-    private $testPropertyGetter;
+    private Closure $testPropertyGetter;
 
     public function setUp(): void
     {
@@ -118,7 +108,7 @@ final class HydratorTest extends TestCase
             'another_unexpected' => true,
         ];
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unexpected data: unexpected, another_unexpected');
 
         $this->subject->hydrate($hydratorConfig, $this, $testData);

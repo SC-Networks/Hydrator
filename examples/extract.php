@@ -46,13 +46,13 @@ var_dump($data);
 
 /**
 array(4) {
-    ["name"]=>
-    string(5) "Gaudi"
-    ["color"]=>
-    string(4) "pink"
-    ["number_of_wheels"]=>
-    int(5)
-    ["out_of_stock"]=>
-    bool(false)
+    'name' =>
+  string(5) "Gaudi"
+  'color' =>
+  string(4) "pink"
+  'number_of_wheels' =>
+  int(5)
+  'out_of_stock' =>
+  bool(false)
 }
- */
+*/

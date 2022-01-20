@@ -4,46 +4,43 @@ declare(strict_types=1);
 
 namespace Scn\Hydrator;
 
+use Closure;
 use InvalidArgumentException;
 use Scn\Hydrator\Configuration\ExtractorConfigInterface;
 use Scn\Hydrator\Configuration\HydratorConfigInterface;
 
 final class Hydrator implements HydratorInterface
 {
-
     public const NO_STRICT_KEYS = 0b00000001;
     public const IGNORE_KEYS = 0b00000010;
     public const DEFAULT = 0b00000000;
 
-    /**
-     * @param callable $callback
-     * @param object $entity
-     * @param mixed ...$args
-     *
-     * @return mixed
-     */
-    private function invoke(callable $callback, object $entity, ...$args)
+    private function invoke(
+        callable $callback,
+        object $entity,
+        mixed ...$args,
+    ): mixed
     {
-        if ($callback instanceof \Closure) {
+        if ($callback instanceof Closure) {
             $callback = $callback->bindTo($entity, $entity) ?: $callback;
         }
 
-        return call_user_func_array($callback, $args);
+        return $callback(...$args);
     }
 
     public function hydrate(
         HydratorConfigInterface $config,
         object $entity,
         array $data,
-        int $flags = self::DEFAULT
+        int $flags = self::DEFAULT,
     ): void {
         $hydratorProperties = $config->getHydratorProperties();
 
-        if ($flags & static::IGNORE_KEYS) {
+        if ($flags & self::IGNORE_KEYS) {
             $data = array_combine(array_keys($hydratorProperties), $data);
         }
 
-        if (~$flags & static::NO_STRICT_KEYS) {
+        if (~$flags & self::NO_STRICT_KEYS) {
             $diff = array_keys(array_diff_key($data, $hydratorProperties));
 
             if ($diff !== []) {

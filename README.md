@@ -39,7 +39,7 @@ A short example:
 
 require_once 'vendor/autoload.php';
 
-class ExtractorConfig implements \Scn\Hydrator\Configuration\ExtractorConfigInterface
+class ExtractorConfig implements Configuration\ExtractorConfigInterface
 {
 
     public function getExtractorProperties(): array
@@ -57,7 +57,7 @@ class Entity
     private $privateProperty = 'private value';
 }
 
-$hydrator = new \Scn\Hydrator\Hydrator();
+$hydrator = new \Hydrator();
 
 $result = $hydrator->extract(
     new ExtractorConfig(),
@@ -90,7 +90,7 @@ A short example:
 
 require_once __DIR__.'vendor/autoload.php';
 
-class HydratorConfig implements \Scn\Hydrator\Configuration\HydratorConfigInterface
+class HydratorConfig implements Configuration\HydratorConfigInterface
 {
 
     public function getHydratorProperties(): array
@@ -113,7 +113,7 @@ class Entity
     }
 }
 
-$hydrator = new \Scn\Hydrator\Hydrator();
+$hydrator = new \Hydrator();
 $data = [
     'property' => 'hydrated private value',
 ];
@@ -152,11 +152,9 @@ Example:
 ```php
 <?php
 
-use Scn\Hydrator\Hydrator;
-
 require_once __DIR__.'vendor/autoload.php';
 
-class HydratorConfig implements \Scn\Hydrator\Configuration\HydratorConfigInterface
+class HydratorConfig implements Configuration\HydratorConfigInterface
 {
 
     public function getHydratorProperties(): array
@@ -192,7 +190,7 @@ class Entity
     }
 }
 
-$hydrator = new \Scn\Hydrator\Hydrator();
+$hydrator = new \Hydrator();
 $data = ['value a', 'value_b', 'value_c'];
 
 $entity = new Entity();

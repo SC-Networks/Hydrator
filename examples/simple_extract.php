@@ -16,18 +16,10 @@ $car = new Car(
 
 
 $mapping = [
-    'name' => function (): string {
-        return $this->name;
-    },
-    'color' => function (): string {
-        return $this->color;
-    },
-    'number_of_wheels' => function (): int {
-        return $this->numberOfWheels;
-    },
-    'out_of_stock' => function (): bool {
-        return !$this->available;
-    }
+    'name' => fn (): string => $this->name,
+    'color' => fn (): string => $this->color,
+    'number_of_wheels' => fn (): int => $this->numberOfWheels,
+    'out_of_stock' => fn (): bool => !$this->available,
 ];
 
 $hydrator = new Hydrator();
@@ -38,15 +30,15 @@ $data = $hydrator->extract($extractorConfig, $car);
 
 var_dump($data);
 
-/**
+/*
 array(4) {
-    ["name"]=>
-    string(5) "Gaudi"
-    ["color"]=>
-    string(4) "pink"
-    ["number_of_wheels"]=>
-    int(5)
-    ["out_of_stock"]=>
-    bool(false)
+  'name' =>
+  string(5) "Gaudi"
+  'color' =>
+  string(4) "pink"
+  'number_of_wheels' =>
+  int(5)
+  'out_of_stock' =>
+  bool(false)
 }
- */
+*/

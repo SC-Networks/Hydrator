@@ -10,26 +10,13 @@ require_once __DIR__.'/assets.php';
 
 class JsonRpcRequest
 {
+    private null|int|string $id;
 
-    /**
-     * @var string|int|null
-     */
-    private $id;
+    private string $method;
 
-    /**
-     * @var string
-     */
-    private $method;
+    private null|array|stdClass $params;
 
-    /**
-     * @var \stdClass|null
-     */
-    private $params;
-
-    /**
-     * @var bool
-     */
-    private $isNotification = false;
+    private bool $isNotification = false;
 }
 
 class JsonRpcRequestHydratorConfig implements HydratorConfigInterface, ExtractorConfigInterface
@@ -71,18 +58,10 @@ class JsonRpcRequestHydratorConfig implements HydratorConfigInterface, Extractor
     public function getExtractorProperties(): array
     {
         return [
-            'id' => function () {
-                return $this->id;
-            },
-            'jsonrpc' => function (): string {
-                return '2.0';
-            },
-            'method' => function (): string {
-                return $this->method;
-            },
-            'params' => function () {
-                return $this->params;
-            }
+            'id' => fn (): null|int|string => $this->id,
+            'jsonrpc' => fn (): string => '2.0',
+            'method' => fn (): string => $this->method,
+            'params' => fn (): null|array|stdClass => $this->params,
         ];
     }
 }
@@ -105,21 +84,23 @@ var_dump(
 );
 
 /*
-object(JsonRpcRequest)#4 (4) {
-["id":"JsonRpcRequest":private]=>
+class JsonRpcRequest#4 (4) {
+  private string|int|null $id =>
   int(123)
-  ["method":"JsonRpcRequest":private]=>
+  private string $method =>
   string(3) "add"
-["params":"JsonRpcRequest":private]=>
+  private stdClass|array|null $params =>
   array(2) {
-    [0]=>
+    [0] =>
     int(4)
-    [1]=>
+    [1] =>
     int(2)
   }
-  ["isNotification":"JsonRpcRequest":private]=>
+  private bool $isNotification =>
   bool(false)
 }
+/home/awuehr/dev/Hydrator/examples/json-rpc.php:83:
 string(56) "{"id":123,"jsonrpc":"2.0","method":"add","params":[4,2]}"
+/home/awuehr/dev/Hydrator/examples/json-rpc.php:83:
 bool(true)
 */

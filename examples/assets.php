@@ -6,36 +6,11 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 final class Car
 {
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $color;
-
-    /**
-     * @var int
-     */
-    private $numberOfWheels;
-
-    /**
-     * @var bool
-     */
-    private $available;
-
     public function __construct(
-        ?string $name,
-        ?string $color,
-        ?int $numberOfWheels,
-        ?bool $available
+        private ?string $name,
+        private ?string $color,
+        private ?int $numberOfWheels,
+        private ?bool $available
     ) {
-        $this->name = $name;
-        $this->color = $color;
-        $this->numberOfWheels = $numberOfWheels;
-        $this->available = $available;
     }
 }

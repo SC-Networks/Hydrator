@@ -38,15 +38,15 @@ $hydrator->hydrate($hydratorConfig, $car, $data);
 
 var_dump($car);
 
-/**
-object(Car)#6 (4) {
-    ["name":"Car":private]=>
-    string(5) "Gaudi"
-    ["color":"Car":private]=>
-    string(4) "pink"
-    ["numberOfWheels":"Car":private]=>
-    int(5)
-    ["available":"Car":private]=>
-    bool(true)
+/*
+class Car#6 (4) {
+  private ?string $name =>
+  string(5) "Gaudi"
+  private ?string $color =>
+  string(4) "pink"
+  private ?int $numberOfWheels =>
+  int(5)
+  private ?bool $available =>
+  bool(true)
 }
  */
