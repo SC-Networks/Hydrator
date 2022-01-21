@@ -1,6 +1,4 @@
 /vendor/
 /build/
 composer.lock
-clover.xml
 /.phpunit.result.cache
-infection.json
